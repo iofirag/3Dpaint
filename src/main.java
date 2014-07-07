@@ -1,19 +1,40 @@
 
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.MenuSelectionManager;
 import javax.swing.SwingUtilities;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Polygon;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class main {
-    
+public class main extends JPanel{
+
+	int hatala = 1;
+	
+	//Lists
+	static List<Point3D> points;
+	static List<Polygon3D> polygons3D ;
+	static List<Polygon2D> polygons2D;
+		
+
+	static int menuSelectedItem;
+	
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -26,22 +47,90 @@ public class main {
       
         JFrame f = new JFrame("3D shapes");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-        f.add(new MyPanel());
+        f.add(new main());
         f.pack();
         f.setVisible(true);
         
+        
+     // Create the menu bar.
+     		JMenuBar menuBar = new JMenuBar();
+     // Transforms
+     		JMenu transformsMenu = new JMenu("Transforms");
+     		JMenuItem transTranslation = new JMenuItem("Translation"); 
+     		transTranslation.addActionListener(new ActionListener() {
+     			@Override
+     			public void actionPerformed(ActionEvent e) {
+     			}
+     		});
+     		JMenuItem transScaling = new JMenuItem("Scaling"); 
+     		transScaling.addActionListener(new ActionListener() {
+     			@Override
+     			public void actionPerformed(ActionEvent e) {
+     				menuSelectedItem = 1;
+     			}
+     		});
+     		JMenuItem transRotation = new JMenuItem("Rotation"); 
+     		transRotation.addActionListener(new ActionListener() {
+     			@Override
+     			public void actionPerformed(ActionEvent e) {
+     			}
+     		});
+
+     		JMenu transMirror = new JMenu("Mirror"); 
+     		JMenuItem transMirrorX = new JMenuItem("Mirror X");
+     		transMirrorX.addActionListener(new ActionListener() {
+     			@Override
+     			public void actionPerformed(ActionEvent e) {
+     				
+     			}
+     		});
+     		JMenuItem transMirrorY = new JMenuItem("Mirror Y");
+     		transMirrorY.addActionListener(new ActionListener() {
+     			@Override
+     			public void actionPerformed(ActionEvent e) {
+     			}
+     		});
+     		JMenuItem transMirrorXY = new JMenuItem("Mirror XY");
+     		transMirrorXY.addActionListener(new ActionListener() {
+     			@Override
+     			public void actionPerformed(ActionEvent e) {
+     			}
+     		});
+     		transMirror.add(transMirrorX);
+     		transMirror.add(transMirrorY);
+     		transMirror.add(transMirrorXY);
+
+     		JMenu transShearing = new JMenu("Shearing"); // Shearing
+     		JMenuItem transShearingX = new JMenuItem("Shearing X");
+     		transShearingX.addActionListener(new ActionListener() {
+
+     			@Override
+     			public void actionPerformed(ActionEvent e) {
+     			}
+     		});
+     		JMenuItem transShearingY = new JMenuItem("Shearing Y");
+     		transShearingY.addActionListener(new ActionListener() {
+     			@Override
+     			public void actionPerformed(ActionEvent e) {
+     			}
+     		});
+     		transShearing.add(transShearingX);
+     		transShearing.add(transShearingY);
+
+     		// ************************************************
+
+
+     		transformsMenu.add(transTranslation);
+     		transformsMenu.add(transScaling);
+     		transformsMenu.add(transRotation);
+     		transformsMenu.add(transMirror);
+     		transformsMenu.add(transShearing);
+     		
+     		menuBar.add(transformsMenu);
+     		f.add(menuBar, BorderLayout.NORTH);
     } 
-}
-
-class MyPanel extends JPanel {
-	int hatala = 1;
-	
-	//Lists
-		static List<Point3D> points;
-		static List<Polygon3D> polygons3D ;
-		static List<Polygon2D> polygons2D;
-
-    public MyPanel() {
+   
+	public main() {
     	this.setBackground(Color.BLACK);
     	//Creating 3D Polygons
     	points = new ArrayList<Point3D>() ;
@@ -59,10 +148,10 @@ class MyPanel extends JPanel {
     	points.add(new Point3D (350,200,173));
     	polygons3D = new ArrayList<Polygon3D>();
     	polygons3D.add(new Polygon3D(Arrays.asList(points.get(0),points.get(2),points.get(3), points.get(1)), Color.WHITE, Color.BLUE));
+    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(2),points.get(6),points.get(7), points.get(3)), Color.WHITE, Color.GREEN));
     	polygons3D.add(new Polygon3D(Arrays.asList(points.get(1),points.get(3),points.get(7), points.get(5)), Color.WHITE, Color.YELLOW));
     	polygons3D.add(new Polygon3D(Arrays.asList(points.get(0),points.get(4),points.get(6), points.get(2)), Color.WHITE, Color.GRAY));
     	polygons3D.add(new Polygon3D(Arrays.asList(points.get(0),points.get(1),points.get(5), points.get(4)), Color.WHITE, Color.ORANGE));
-    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(2),points.get(6),points.get(7), points.get(3)), Color.WHITE, Color.GREEN));
     	polygons3D.add(new Polygon3D(Arrays.asList(points.get(4),points.get(5),points.get(7), points.get(6)), Color.WHITE, Color.RED));
     	polygons3D.add(new Polygon3D(Arrays.asList(points.get(10),points.get(9),points.get(8)), Color.WHITE, Color.WHITE));
     	polygons3D.add(new Polygon3D(Arrays.asList(points.get(9),points.get(10),points.get(11)), Color.WHITE, Color.BLUE));
@@ -77,7 +166,7 @@ class MyPanel extends JPanel {
     			boolean zIndexChosen = false;
     			// run on every 3D polygons
     			for (int i=0 ; i<polygons3D.size() ; i++){
-    				//if(polygons3D.get(i).isVectorV()==true){
+    				if(polygons3D.get(i).isVectorV()==true){
 	    				Polygon2D tmpP = new Polygon2D(polygons3D.get(i).getColor() , polygons3D.get(i).getFillColor());
 	    				
 	    				// run on every point in the 3D polygon and calculate new values according to Cavalier
@@ -86,8 +175,8 @@ class MyPanel extends JPanel {
 	    					int tmpY = polygons3D.get(i).getPoints().get(j).getY();
 	    					int tmpZ = polygons3D.get(i).getPoints().get(j).getZ();
 	    					//Cavalier
-	    					tmpX = (int) (tmpX + tmpZ * Math.cos(angle));
-	    					tmpY = (int) (tmpY + tmpZ * Math.sin(angle));
+	    					tmpX = (int) (tmpX + 0.5*tmpZ * Math.cos(angle));
+	    					tmpY = (int) (tmpY + 0.5*tmpZ * Math.sin(angle));
 	    					tmpP.getPoints().add(new Point(tmpX,tmpY));
 	    					
 	    					if (zIndexChosen==false){
@@ -98,7 +187,7 @@ class MyPanel extends JPanel {
 					polygons2D.add(new Polygon2D(tmpP.getPoints(), tmpP.getColor(), tmpP.getFillColor(), tmpP.zIndex));
     				zIndexChosen = false;
     			}
-    		//}
+    		}
     			//Sort the 2D polygons by their Z index.
 				sortbyZindex(polygons2D);
 				break;
@@ -115,8 +204,8 @@ class MyPanel extends JPanel {
     	// Mouse listeners
         addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
-            	
-             
+            	//p.addPoint(  (int) (900+Math.random()*30), (int) (900+Math.random()*3000));
+            	//repaint();
             }
         });
 
@@ -125,6 +214,25 @@ class MyPanel extends JPanel {
                
             }
         });
+        addMouseMotionListener(new MouseAdapter() {
+            public void mouseMoved(MouseEvent e) {
+            	currMousePoint = new Point(e.getX()-8, e.getY()-53);
+            }
+        });
+        
+        addMouseWheelListener(new MouseWheelListener() {
+			@Override
+			public void mouseWheelMoved(MouseWheelEvent e) {
+		/*      if (menuSelectedItem==1){  //Scaling
+		    	  if (e.getWheelRotation() > 0) {
+						zoom = 0.9;
+					} else {
+						zoom = 1.1;
+					}
+		      }*/
+				
+			}
+		});
         
     }
     
@@ -141,9 +249,12 @@ class MyPanel extends JPanel {
            
            g.setColor(polygons2D.get(i).getColor());
            g.drawPolygon(x, y, x.length);
-           g.setColor(polygons2D.get(i).getFillColor());
-           g.fillPolygon(x, y, x.length);
-        	
+           if (i<10){
+        	   g.setColor(polygons2D.get(i).getFillColor());
+        	   g.fillPolygon(x, y, x.length);
+           }
+         //  g.setColor(Color.red);
+          // g.fillPolygon(p);
         }
         
 //        int[] xPoints = {100,50,15,470};
