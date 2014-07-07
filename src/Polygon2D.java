@@ -1,9 +1,10 @@
 import java.awt.Color;
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.List;
 
 
-public class Polygon2D {
+public class Polygon2D{
 	private List<Point> points;
 	private Color color;
 	private Color fillColor;
@@ -35,7 +36,7 @@ public class Polygon2D {
 
 	public Color getFillColor() {
 		return fillColor;
-	}
+	}	
 
 	public void setFillColor(Color fillColor) {
 		this.fillColor = fillColor;
@@ -53,7 +54,26 @@ public class Polygon2D {
 		super();
 		this.color = color;
 		this.fillColor = fillColor;
+		this.points = new ArrayList<Point>();
 	}
+
+	public int[] getXarray() {
+		int x[] = new int[this.points.size()];
+		for (int i=0; i<points.size(); i++){
+			x[i] = (int) points.get(i).getX();		
+		}
+		return x;
+	}
+
+	public int[] getYarray() {
+		int y[] = new int[this.points.size()];
+		for (int i=0; i<points.size(); i++){
+			y[i] = (int) points.get(i).getY();		
+		}
+		return y;
+	}
+
+
 	
 	
 
