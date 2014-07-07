@@ -1,5 +1,5 @@
 
-public class Point {
+public class Point3D {
 private int x;
 private int y;
 private int z;
@@ -28,7 +28,7 @@ public void setZ(int z) {
 	this.z = z;
 }
 
-public Point (int x, int y ,int z){
+public Point3D (int x, int y ,int z){
 	this.x = x;
 	this.y = y;
 	this.z = z;	
