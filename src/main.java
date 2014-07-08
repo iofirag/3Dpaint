@@ -31,7 +31,7 @@ public class main extends JPanel{
 	static int Width = 900;
 	static int Height = 500;
 	
-	static int viewersDistance = 1000;
+	static int viewersDistance = -1000;
 	static int hatala = 1;
 	static int menuSelectedItem;
 	//static myJPanel pane = new myJPanel();
@@ -197,9 +197,9 @@ public class main extends JPanel{
 	    	points.add(new Point3D (350,200,173));
 	    	polygons3D = new ArrayList<Polygon3D>();
 	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(0),points.get(2),points.get(3), points.get(1)), Color.WHITE, Color.BLUE));
-	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(2),points.get(6),points.get(7), points.get(3)), Color.WHITE, Color.GREEN));
-	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(1),points.get(3),points.get(7), points.get(5)), Color.WHITE, Color.YELLOW));
 	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(0),points.get(4),points.get(6), points.get(2)), Color.WHITE, Color.GRAY));
+	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(1),points.get(3),points.get(7), points.get(5)), Color.WHITE, Color.YELLOW));
+	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(2),points.get(6),points.get(7), points.get(3)), Color.WHITE, Color.GREEN));
 	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(0),points.get(1),points.get(5), points.get(4)), Color.WHITE, Color.ORANGE));
 	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(4),points.get(5),points.get(7), points.get(6)), Color.WHITE, Color.RED));
 	    	
@@ -226,7 +226,7 @@ public class main extends JPanel{
 			addMouseWheelListener(new MouseWheelListener() {
 				@Override
 				public void mouseWheelMoved(MouseWheelEvent e) {
-					switch (main.menuSelectedItem) { 
+					switch (menuSelectedItem) { 
 					case 1:// Scaling
 						double zoom;
 						if (e.getWheelRotation() > 0) {
@@ -395,13 +395,13 @@ public class main extends JPanel{
 	    }
     
 	    public Dimension getPreferredSize() {
-	        return new Dimension(main.Width,main.Height);
+	        return new Dimension(Width,Height);
 	    }
     
 	    //All paint actions will be performed from this function
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		if (main.init==true){
+		if (init==true){
 			points = new ArrayList<Point3D>() ;
 	    	points.add(new Point3D (100,100,100));
 	    	points.add(new Point3D (200,100,100));
@@ -427,9 +427,10 @@ public class main extends JPanel{
 	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(9),points.get(10),points.get(11)), Color.WHITE, Color.BLUE));
 	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(8),points.get(9),points.get(11)), Color.WHITE, Color.ORANGE));
 	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(8),points.get(10),points.get(11)), Color.WHITE, Color.CYAN));
+	    	init = false;
 		}
 		
-		switch (main.hatala) {
+		switch (hatala) {
 		case 1:
 			polygons2D = cabinet();
 			break;
@@ -564,7 +565,7 @@ public class main extends JPanel{
 								tmpZ, 
 								1 } };
 						Matrix object = new Matrix(objectValues);
-						double sz = (1/(1+(tmpZ/main.viewersDistance)));
+						double sz = (1/(1+(tmpZ/viewersDistance)));
 						double[][] scaleValues = {
 								{ sz, 0, 0, 0 },
 								{ 0, sz, 0 ,0},
@@ -587,6 +588,6 @@ public class main extends JPanel{
 		}
 		
 		public static Point getImageCenter() {
-			return new Point (main.Width/2, main.Height/2);
+			return new Point (Width/2, Height/2);
 		}
 }

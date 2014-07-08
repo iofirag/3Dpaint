@@ -60,7 +60,7 @@ public class Polygon3D {
 	private boolean calculateVisibility() {
 		// VectorNormal * (P0.x, P0.y , P0,z -1000 ) 
 		int scalarResult = (vectorN.getX() * points.get(0).getX()) + (vectorN.getY() * points.get(0).getY()) + (vectorN.getZ() * (points.get(0).getZ()+ main.viewersDistance));
-		if (scalarResult>0)
+		if (scalarResult<0)
 			return true;
 		else
 		return false;
