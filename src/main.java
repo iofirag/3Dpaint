@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class main{
+public class main extends JPanel{
 	
 	static int Width = 900;
 	static int Height = 500;
@@ -34,7 +34,9 @@ public class main{
 	static int viewersDistance = 1000;
 	static int hatala = 1;
 	static int menuSelectedItem;
-	static myJPanel pane = new myJPanel();
+	//static myJPanel pane = new myJPanel();
+	static main m = new main();
+	public static boolean init=false;
 	
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -48,7 +50,7 @@ public class main{
       
         final JFrame f = new JFrame("3D shapes");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-        f.add(pane);
+        f.add(m);
         f.pack();
         f.setVisible(true);
         
@@ -78,7 +80,7 @@ public class main{
      				menuSelectedItem = 2;
      				String result = JOptionPane
     						.showInputDialog("Enter angle for rotation:");
-    				pane.angle = Integer.parseInt(result);
+    				angle = Integer.parseInt(result);
      			}
      		});
      		JMenuItem transRotationXZ = new JMenuItem("X-Z");
@@ -88,7 +90,7 @@ public class main{
      				menuSelectedItem = 3;
      				String result = JOptionPane
     						.showInputDialog("Enter angle for rotation:");
-    				pane.angle = Integer.parseInt(result);
+    				angle = Integer.parseInt(result);
      			}
      		});
      		JMenuItem transRotationYZ = new JMenuItem("Y-Z");
@@ -98,7 +100,7 @@ public class main{
      				menuSelectedItem = 4;
      				String result = JOptionPane
     						.showInputDialog("Enter angle for rotation:");
-    				pane.angle = Integer.parseInt(result);
+    				angle = Integer.parseInt(result);
      			}
      		});
      		transRotation.add(transRotationXY);
@@ -122,8 +124,8 @@ public class main{
      				// custom title, custom icon
     				String result = JOptionPane
     						.showInputDialog("Enter angle for perspective:");
-    				pane.angle = Integer.parseInt(result);
-     				pane.repaint();
+    				angle = Integer.parseInt(result);
+     				m.repaint();
      			}
      		});
      		JMenuItem persCavalier = new JMenuItem("Cavalier"); 
@@ -134,8 +136,8 @@ public class main{
      				// custom title, custom icon
     				String result = JOptionPane
     						.showInputDialog("Enter angle for perspective:");
-    				pane.angle = Integer.parseInt(result);
-     				pane.repaint();
+    				angle = Integer.parseInt(result);
+     				m.repaint();
      			}
      		});
      		JMenuItem persPerpective = new JMenuItem("Perpective"); 
@@ -143,7 +145,7 @@ public class main{
      			@Override
      			public void actionPerformed(ActionEvent e) {
      				hatala = 3;
-     				pane.repaint();
+     				m.repaint();
      			}
      		});
      		perspectiveMenu.add(persCabinet);
@@ -154,32 +156,8 @@ public class main{
      		restart.addActionListener(new ActionListener() {
      			@Override
      			public void actionPerformed(ActionEvent e) {
-     				pane.points = new ArrayList<Point3D>() ;
-     				pane.points.add(new Point3D (100,100,100));
-     				pane.points.add(new Point3D (200,100,100));
-     				pane.points.add(new Point3D (100,200,100));
-     				pane.points.add(new Point3D (200,200,100));
-     				pane.points.add(new Point3D (100,100,200));
-     				pane.points.add(new Point3D (200,100,200));
-     				pane.points.add(new Point3D (100,200,200));
-     				pane.points.add(new Point3D (200,200,200));
-     				pane.points.add(new Point3D (300,100,123));
-     				pane.points.add(new Point3D (323,123,223));
-     				pane.points.add(new Point3D (400,100,173));
-     				pane.points.add(new Point3D (350,200,173));
-     				pane.polygons3D = new ArrayList<Polygon3D>();
-     				pane.polygons3D.add(new Polygon3D(Arrays.asList(pane.points.get(0),pane.points.get(2),pane.points.get(3), pane.points.get(1)), Color.WHITE, Color.BLUE));
-     				pane.polygons3D.add(new Polygon3D(Arrays.asList(pane.points.get(2),pane.points.get(6),pane.points.get(7), pane.points.get(3)), Color.WHITE, Color.GREEN));
-     				pane.polygons3D.add(new Polygon3D(Arrays.asList(pane.points.get(1),pane.points.get(3),pane.points.get(7), pane.points.get(5)), Color.WHITE, Color.YELLOW));
-     				pane.polygons3D.add(new Polygon3D(Arrays.asList(pane.points.get(0),pane.points.get(4),pane.points.get(6), pane.points.get(2)), Color.WHITE, Color.GRAY));
-     				pane.polygons3D.add(new Polygon3D(Arrays.asList(pane.points.get(0),pane.points.get(1),pane.points.get(5), pane.points.get(4)), Color.WHITE, Color.ORANGE));
-     				pane.polygons3D.add(new Polygon3D(Arrays.asList(pane.points.get(4),pane.points.get(5),pane.points.get(7), pane.points.get(6)), Color.WHITE, Color.RED));
-     		    	
-     				pane.polygons3D.add(new Polygon3D(Arrays.asList(pane.points.get(10),pane.points.get(9),pane.points.get(8)), Color.WHITE, Color.WHITE));
-     				pane.polygons3D.add(new Polygon3D(Arrays.asList(pane.points.get(9),pane.points.get(10),pane.points.get(11)), Color.WHITE, Color.BLUE));
-     				pane.polygons3D.add(new Polygon3D(Arrays.asList(pane.points.get(8),pane.points.get(9),pane.points.get(11)), Color.WHITE, Color.ORANGE));
-     				pane.polygons3D.add(new Polygon3D(Arrays.asList(pane.points.get(8),pane.points.get(10),pane.points.get(11)), Color.WHITE, Color.CYAN));
-     		    	pane.repaint();	
+     				init=true;
+     		    	m.repaint();	
      			}
      		});
      	
@@ -188,12 +166,12 @@ public class main{
      		menuBar.add(restart);
      		f.add(menuBar, BorderLayout.NORTH);
     } 
-}
-    class myJPanel extends JPanel{
+
+
     	//mouse var's
     	protected Point currMousePoint;
     	
-    	int angle=90;
+    	static int angle=90;
     	
     	//Lists
     	static List<Point3D> points;
@@ -201,7 +179,7 @@ public class main{
     	static List<Polygon2D> polygons2D;
     	
     	
-		public myJPanel() {
+		public main() {
 	    	this.setBackground(Color.BLACK);
 	    	//Creating 3D Polygons
 	    	points = new ArrayList<Point3D>() ;
@@ -423,7 +401,34 @@ public class main{
 	    //All paint actions will be performed from this function
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
+		if (main.init==true){
+			points = new ArrayList<Point3D>() ;
+	    	points.add(new Point3D (100,100,100));
+	    	points.add(new Point3D (200,100,100));
+	    	points.add(new Point3D (100,200,100));
+	    	points.add(new Point3D (200,200,100));
+	    	points.add(new Point3D (100,100,200));
+	    	points.add(new Point3D (200,100,200));
+	    	points.add(new Point3D (100,200,200));
+	    	points.add(new Point3D (200,200,200));
+	    	points.add(new Point3D (300,100,123));
+	    	points.add(new Point3D (323,123,223));
+	    	points.add(new Point3D (400,100,173));
+	    	points.add(new Point3D (350,200,173));
+	    	polygons3D = new ArrayList<Polygon3D>();
+	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(0),points.get(2),points.get(3), points.get(1)), Color.WHITE, Color.BLUE));
+	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(2),points.get(6),points.get(7), points.get(3)), Color.WHITE, Color.GREEN));
+	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(1),points.get(3),points.get(7), points.get(5)), Color.WHITE, Color.YELLOW));
+	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(0),points.get(4),points.get(6), points.get(2)), Color.WHITE, Color.GRAY));
+	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(0),points.get(1),points.get(5), points.get(4)), Color.WHITE, Color.ORANGE));
+	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(4),points.get(5),points.get(7), points.get(6)), Color.WHITE, Color.RED));
+	    	
+	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(10),points.get(9),points.get(8)), Color.WHITE, Color.WHITE));
+	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(9),points.get(10),points.get(11)), Color.WHITE, Color.BLUE));
+	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(8),points.get(9),points.get(11)), Color.WHITE, Color.ORANGE));
+	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(8),points.get(10),points.get(11)), Color.WHITE, Color.CYAN));
+		}
+		
 		switch (main.hatala) {
 		case 1:
 			polygons2D = cabinet();
