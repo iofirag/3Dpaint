@@ -170,6 +170,8 @@ public class main extends JPanel{
 
     	//mouse var's
     	protected Point currMousePoint;
+		protected Point lastDrag;
+		protected Point pointPressed;
     	
     	static int angle=90;
     	
@@ -212,10 +214,27 @@ public class main extends JPanel{
 	    	// Mouse listeners
 	        addMouseListener(new MouseAdapter() {
 	            public void mousePressed(MouseEvent e) {
+	            	pointPressed = new Point(e.getPoint().x - 8,e.getPoint().y - 53);
 	            }
 	        });
 	        addMouseMotionListener(new MouseAdapter() {
 	            public void mouseDragged(MouseEvent e) {
+	            	lastDrag = new Point(e.getPoint().x - 8,e.getPoint().y - 53);
+
+					// Shift transformation
+					int dragDx = lastDrag.x - pointPressed.x;
+					int dragDy = lastDrag.y - pointPressed.y;
+					pointPressed.x = lastDrag.x;
+					pointPressed.y = lastDrag.y;
+
+					for (int i = 0; i < polygons3D.size(); i++) {
+						// Change current polygon cordinations
+						for (int j = 0; j < polygons3D.get(i).getPoints().size(); j++) {
+							polygons3D.get(i).getPoints().get(j).setX(polygons3D.get(i).getPoints().get(j).getX() +dragDx  );
+							polygons3D.get(i).getPoints().get(j).setY(polygons3D.get(i).getPoints().get(j).getY() +dragDy  );
+						}
+						repaint();
+					}
 	            }
 	        });
 	        addMouseMotionListener(new MouseAdapter() {
