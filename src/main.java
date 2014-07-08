@@ -34,6 +34,8 @@ public class main extends JPanel{
 	static int viewersDistance = -1000;
 	static int hatala = 1;
 	static int menuSelectedItem;
+	static boolean fill = true;
+	
 	//static myJPanel pane = new myJPanel();
 	static main m = new main();
 	public static boolean init=false;
@@ -45,6 +47,9 @@ public class main extends JPanel{
             }
         });
     }
+
+
+	
     
     private static void createAndShowGUI() {
       
@@ -152,6 +157,27 @@ public class main extends JPanel{
      		perspectiveMenu.add(persCavalier);
      		perspectiveMenu.add(persPerpective);
      	// ************************************************
+     	// Fill menu	
+     		JMenu poligonsFillMenu = new JMenu("Fill");
+     		JMenuItem autoFill = new JMenuItem("Auto fill"); 
+     		autoFill.addActionListener(new ActionListener() {
+     			@Override
+     			public void actionPerformed(ActionEvent e) {
+     				fill = true;
+     				m.repaint();
+     			}
+     		});
+     		JMenuItem transparentFill = new JMenuItem("Transparent"); 
+     		transparentFill.addActionListener(new ActionListener() {
+     			@Override
+     			public void actionPerformed(ActionEvent e) {
+     				fill = false;
+     				m.repaint();
+     			}
+     		});
+     		poligonsFillMenu.add(autoFill);
+     		poligonsFillMenu.add(transparentFill);
+     	// ************************************************
      		JMenuItem restart = new JMenu("Restart"); 
      		restart.addActionListener(new ActionListener() {
      			@Override
@@ -163,6 +189,7 @@ public class main extends JPanel{
      	
      		menuBar.add(transformsMenu);
      		menuBar.add(perspectiveMenu);
+     		menuBar.add(poligonsFillMenu);
      		menuBar.add(restart);
      		f.add(menuBar, BorderLayout.NORTH);
     } 
@@ -467,8 +494,10 @@ public class main extends JPanel{
 
 			g.setColor(polygons2D.get(i).getColor());
 			g.drawPolygon(x, y, x.length);
-			g.setColor(polygons2D.get(i).getFillColor());
-			g.fillPolygon(x, y, x.length);
+			if (fill){
+				g.setColor(polygons2D.get(i).getFillColor());
+				g.fillPolygon(x, y, x.length);
+			}
 		}
 	}
     
