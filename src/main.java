@@ -20,6 +20,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.util.ArrayList;
@@ -31,7 +32,8 @@ public class main extends JPanel{
 	static int Width = 900;
 	static int Height = 500;
 	
-	static int viewersDistance = -1000;
+	
+	static int viewersDistance = -1000;   //Cop value
 	static int hatala = 1;
 	static int menuSelectedItem;
 	static boolean fill = true;
@@ -48,11 +50,7 @@ public class main extends JPanel{
         });
     }
 
-
-	
-    
     private static void createAndShowGUI() {
-      
         final JFrame f = new JFrame("3D shapes");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
         f.add(m);
@@ -60,7 +58,7 @@ public class main extends JPanel{
         f.setVisible(true);
         
         
-     // Create the menu bar.
+     // Create the menu bar
      		JMenuBar menuBar = new JMenuBar();
      // Transforms
      		JMenu transformsMenu = new JMenu("Transforms");
@@ -112,14 +110,12 @@ public class main extends JPanel{
      		transRotation.add(transRotationXZ);
      		transRotation.add(transRotationYZ);
      		// **********************
-
-
      		transformsMenu.add(transTranslation);
      		transformsMenu.add(transScaling);
      		transformsMenu.add(transRotation);
-     	// ************************************************
+     		// ************************************************
      		
-     	// Perspectives menu	
+     		// Perspectives menu	
      		JMenu perspectiveMenu = new JMenu("Select view");
      		JMenuItem persCabinet = new JMenuItem("Cabinet"); 
      		persCabinet.addActionListener(new ActionListener() {
@@ -159,7 +155,7 @@ public class main extends JPanel{
      	// ************************************************
      	// Fill menu	
      		JMenu poligonsFillMenu = new JMenu("Fill");
-     		JMenuItem autoFill = new JMenuItem("Auto fill"); 
+     		JMenuItem autoFill = new JMenuItem("Fill polygons"); 
      		autoFill.addActionListener(new ActionListener() {
      			@Override
      			public void actionPerformed(ActionEvent e) {
@@ -167,7 +163,7 @@ public class main extends JPanel{
      				m.repaint();
      			}
      		});
-     		JMenuItem transparentFill = new JMenuItem("Transparent"); 
+     		JMenuItem transparentFill = new JMenuItem("Remove Fill"); 
      		transparentFill.addActionListener(new ActionListener() {
      			@Override
      			public void actionPerformed(ActionEvent e) {
@@ -178,19 +174,85 @@ public class main extends JPanel{
      		poligonsFillMenu.add(autoFill);
      		poligonsFillMenu.add(transparentFill);
      	// ************************************************
-     		JMenuItem restart = new JMenu("Restart"); 
-     		restart.addActionListener(new ActionListener() {
-     			@Override
-     			public void actionPerformed(ActionEvent e) {
-     				init=true;
-     		    	m.repaint();	
-     			}
-     		});
-     	
+     		JMenu restart = new JMenu("Restart"); 
+     		restart.addMouseListener(new MouseListener() {
+				
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					init=true;
+     				hatala=1;
+     				menuSelectedItem = 0;
+     				m.angle = 90;
+     		    	m.repaint();
+					
+				}
+			});
+     		JMenu helpMenu = new JMenu("Help");
+    		JMenuItem instructions = new JMenuItem("Instructions");
+    		instructions.addActionListener(new ActionListener() {
+    			@Override
+    			public void actionPerformed(ActionEvent e) {
+    				JOptionPane.showMessageDialog(null, "Instructions:\n\n" +
+
+    						"How to use the transformations?:\n" +
+    						"" +
+    						"   Translation-\n" +
+    						"   click with the mouse and drag it.\n\n" +
+    						"" +
+    						"   Scaling-\n" +
+    						"   Use with mouse wheel for zoom-in and zoom-out.\n\n" +
+    						"" +
+    						"   Rotation-\n" +
+    						"   To rotate right : Mouse wheel in.\n" +
+    						"   To rotate left : Mouse wheel out.\n" +
+    						"" +
+    						
+    						"");
+    			}
+    		});
+    		JMenuItem about = new JMenuItem("About");
+    		about.addActionListener(new ActionListener() {
+    			@Override
+    			public void actionPerformed(ActionEvent e) {
+    				JOptionPane.showMessageDialog(null, "About:\n\n" +
+    						"Computers graphics ex3, Created by:\n"+
+    						"Ofir Aghai\n" +
+    						"Vidran Abdovich\n\n" +
+    						"" +
+    						"Have fun!");
+    			}
+    		});
+    		helpMenu.add(instructions);
+    		helpMenu.add(about);
      		menuBar.add(transformsMenu);
      		menuBar.add(perspectiveMenu);
      		menuBar.add(poligonsFillMenu);
      		menuBar.add(restart);
+     		menuBar.add(helpMenu);
      		f.add(menuBar, BorderLayout.NORTH);
     } 
 
@@ -204,13 +266,11 @@ public class main extends JPanel{
     	
     	//Lists
     	static List<Point3D> points;
-    	static List<Polygon3D> polygons3D ;
+    	static List<Polygon3D> polygons3D;
     	static List<Polygon2D> polygons2D;
     	
-    	
-		public main() {
-	    	this.setBackground(Color.BLACK);
-	    	//Creating 3D Polygons
+    	//Initialization function that creates a list of 3D Polygons
+    	public void init(){
 	    	points = new ArrayList<Point3D>() ;
 	    	points.add(new Point3D (100,100,100));
 	    	points.add(new Point3D (200,100,100));
@@ -236,8 +296,12 @@ public class main extends JPanel{
 	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(9),points.get(10),points.get(11)), Color.WHITE, Color.BLUE));
 	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(8),points.get(9),points.get(11)), Color.WHITE, Color.ORANGE));
 	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(8),points.get(10),points.get(11)), Color.WHITE, Color.CYAN));
-	    			
-
+	    	}
+    	
+		public main() {
+	    	this.setBackground(Color.BLACK);
+	    	//Creating 3D Polygons
+	    	init();
 	    	// Mouse listeners
 	        addMouseListener(new MouseAdapter() {
 	            public void mousePressed(MouseEvent e) {
@@ -255,11 +319,13 @@ public class main extends JPanel{
 					pointPressed.y = lastDrag.y;
 
 					for (int i = 0; i < polygons3D.size(); i++) {
-						// Change current polygon cordinations
+						// Change current polygon coordinations
 						for (int j = 0; j < polygons3D.get(i).getPoints().size(); j++) {
 							polygons3D.get(i).getPoints().get(j).setX(polygons3D.get(i).getPoints().get(j).getX() +dragDx  );
 							polygons3D.get(i).getPoints().get(j).setY(polygons3D.get(i).getPoints().get(j).getY() +dragDy  );
 						}
+						polygons3D.get(i).setVectorN();
+						polygons3D.get(i).setVectorV();
 						repaint();
 					}
 	            }
@@ -306,6 +372,8 @@ public class main extends JPanel{
 								p.getPoints().get(i).setY((int) scaleResult.get(0,1));
 								p.getPoints().get(i).setZ((int) scaleResult.get(0,2));
 							}
+							p.setVectorN();
+							p.setVectorV();
 							repaint();
 						}
 						break;
@@ -348,8 +416,11 @@ public class main extends JPanel{
 								p.getPoints().get(i).setY((int) rotateResult.get(0,1));
 								p.getPoints().get(i).setZ((int) rotateResult.get(0,2));
 							}
+							p.setVectorN();
+							p.setVectorV();
+							repaint();
 						}
-						repaint();
+						
 					}
 						break;
 					case 3:{	// Rotation X-Z
@@ -388,9 +459,11 @@ public class main extends JPanel{
 								p.getPoints().get(i).setY((int) rotateResult.get(0,1));
 								p.getPoints().get(i).setZ((int) rotateResult.get(0,2));
 							}
+							p.setVectorN();
+							p.setVectorV();
+							repaint();
 						}
 						
-						repaint();
 					}
 						break;
 					case 4:{	// Rotation Y-Z
@@ -429,8 +502,10 @@ public class main extends JPanel{
 								p.getPoints().get(i).setY((int) rotateResult.get(0,1));
 								p.getPoints().get(i).setZ((int) rotateResult.get(0,2));
 							}
+							p.setVectorN();
+							p.setVectorV();
+							repaint();
 						}
-						repaint();
 					}
 						break;
 					}
@@ -448,32 +523,8 @@ public class main extends JPanel{
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		if (init==true){
-			points = new ArrayList<Point3D>() ;
-	    	points.add(new Point3D (100,100,100));
-	    	points.add(new Point3D (200,100,100));
-	    	points.add(new Point3D (100,200,100));
-	    	points.add(new Point3D (200,200,100));
-	    	points.add(new Point3D (100,100,200));
-	    	points.add(new Point3D (200,100,200));
-	    	points.add(new Point3D (100,200,200));
-	    	points.add(new Point3D (200,200,200));
-	    	points.add(new Point3D (300,100,123));
-	    	points.add(new Point3D (323,123,223));
-	    	points.add(new Point3D (400,100,173));
-	    	points.add(new Point3D (350,200,173));
-	    	polygons3D = new ArrayList<Polygon3D>();
-	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(0),points.get(2),points.get(3), points.get(1)), Color.WHITE, Color.BLUE));
-	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(2),points.get(6),points.get(7), points.get(3)), Color.WHITE, Color.GREEN));
-	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(1),points.get(3),points.get(7), points.get(5)), Color.WHITE, Color.YELLOW));
-	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(0),points.get(4),points.get(6), points.get(2)), Color.WHITE, Color.GRAY));
-	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(0),points.get(1),points.get(5), points.get(4)), Color.WHITE, Color.ORANGE));
-	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(4),points.get(5),points.get(7), points.get(6)), Color.WHITE, Color.RED));
-	    	
-	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(10),points.get(9),points.get(8)), Color.WHITE, Color.WHITE));
-	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(9),points.get(10),points.get(11)), Color.WHITE, Color.BLUE));
-	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(8),points.get(9),points.get(11)), Color.WHITE, Color.ORANGE));
-	    	polygons3D.add(new Polygon3D(Arrays.asList(points.get(8),points.get(10),points.get(11)), Color.WHITE, Color.CYAN));
-	    	init = false;
+			m.init();
+			init = false;
 		}
 		
 		switch (hatala) {
@@ -500,7 +551,7 @@ public class main extends JPanel{
 			}
 		}
 	}
-    
+    	// This function gets a List of 2D Polygons and sorts it by the Z index parameter
 	    public List<Polygon2D> sortbyZindex(List<Polygon2D> polygons){
 	    	   
 	    	    for (int pass=1; pass < polygons.size(); pass++) {  // count how many times
@@ -516,7 +567,7 @@ public class main extends JPanel{
 	    	    }
 	    	    return polygons;
 	    }
-    
+	    //This function applie the Cabinet view
 		public List<Polygon2D> cabinet() {
 			List<Polygon2D> polygons2d = new ArrayList<Polygon2D>();
 			boolean zIndexChosen = false;
@@ -553,7 +604,7 @@ public class main extends JPanel{
 			return polygons2d;
 		}
 	
-		
+		//This function applie the Cavalier view
 		public List<Polygon2D> cavalier() {
 			List<Polygon2D> polygons2d = new ArrayList<Polygon2D>();
 			boolean zIndexChosen = false;
@@ -590,7 +641,7 @@ public class main extends JPanel{
 			return polygons2d;
 		}
 		
-		
+		//This function applie the Perspective view
 		public List<Polygon2D> perspective(){
 			List<Polygon2D> polygons2d = new ArrayList<Polygon2D>();
 			

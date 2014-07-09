@@ -34,14 +34,14 @@ public class Polygon3D {
 	public Point3D getVectorN() {
 		return vectorN;
 	}
-	public void setVectorN(Point3D vectorN) {
-		this.vectorN = vectorN;
+	public void setVectorN() {
+		this.vectorN = calculateNormal();
 	}
 	public boolean isVectorV() {
 		return vectorV;
 	}
-	public void setVectorV(boolean vectorV) {
-		this.vectorV = vectorV;
+	public void setVectorV() {
+		this.vectorV = calculateVisibility();
 	}
 	public Color getColor() {
 		return color;
@@ -57,7 +57,7 @@ public class Polygon3D {
 	}
 	
 	
-	private boolean calculateVisibility() {
+	public boolean calculateVisibility() {
 		// VectorNormal * (P0.x, P0.y , P0,z -1000 ) 
 		int scalarResult = (vectorN.getX() * points.get(0).getX()) + (vectorN.getY() * points.get(0).getY()) + (vectorN.getZ() * (points.get(0).getZ()+ main.viewersDistance));
 		if (scalarResult<0)
@@ -65,7 +65,7 @@ public class Polygon3D {
 		else
 		return false;
 	}
-	private Point3D calculateNormal() {
+	public Point3D calculateNormal() {
 		// (X2-X1, Y2-Y1, Z2-Z1)  x  (X3-X2, Y3-Y2, Z3-Z2) = (x , y , z)
 		int normalVectorLeftSegment[] = {points.get(1).getX() - points.get(0).getX(),
 										 points.get(1).getY() - points.get(0).getY(),
