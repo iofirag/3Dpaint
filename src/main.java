@@ -1,9 +1,11 @@
-
+/*Graphics programming , exercise 3.
+ * Created by Ofir Aghai and Vidran Abdovich
+ * Date : 11/7/2014
+ */
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.MenuSelectionManager;
 import javax.swing.SwingUtilities;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -34,7 +36,7 @@ public class main extends JPanel{
 	
 	
 	static int viewersDistance = -1000;   //Cop value
-	static int hatala = 1;
+	static int projection = 1;
 	static int menuSelectedItem;
 	static boolean fill = true;
 	
@@ -121,7 +123,7 @@ public class main extends JPanel{
      		persCabinet.addActionListener(new ActionListener() {
      			@Override
      			public void actionPerformed(ActionEvent e) {
-     				hatala = 1;
+     				projection = 1;
      				// custom title, custom icon
     				String result = JOptionPane
     						.showInputDialog("Enter angle for perspective:");
@@ -133,7 +135,7 @@ public class main extends JPanel{
      		persCavalier.addActionListener(new ActionListener() {
      			@Override
      			public void actionPerformed(ActionEvent e) {
-     				hatala = 2;
+     				projection = 2;
      				// custom title, custom icon
     				String result = JOptionPane
     						.showInputDialog("Enter angle for perspective:");
@@ -145,7 +147,7 @@ public class main extends JPanel{
      		persPerpective.addActionListener(new ActionListener() {
      			@Override
      			public void actionPerformed(ActionEvent e) {
-     				hatala = 3;
+     				projection = 3;
      				m.repaint();
      			}
      		});
@@ -202,9 +204,11 @@ public class main extends JPanel{
 				}
 				
 				@Override
+				// When clicking 'restart' in the menu, we need to 
+				//initialize all parameters to its original values
 				public void mouseClicked(MouseEvent e) {
 					init=true;
-     				hatala=1;
+     				projection=1;
      				menuSelectedItem = 0;
      				m.angle = 90;
      		    	m.repaint();
@@ -257,14 +261,14 @@ public class main extends JPanel{
     } 
 
 
-    	//mouse var's
+    	//mouse variables
     	protected Point currMousePoint;
 		protected Point lastDrag;
 		protected Point pointPressed;
     	
     	static int angle=90;
     	
-    	//Lists
+    	//Lists to hold points and polygons
     	static List<Point3D> points;
     	static List<Polygon3D> polygons3D;
     	static List<Polygon2D> polygons2D;
@@ -300,7 +304,7 @@ public class main extends JPanel{
     	
 		public main() {
 	    	this.setBackground(Color.BLACK);
-	    	//Creating 3D Polygons
+	    	//Creating 3D Polygons and adding them to polygons3D list
 	    	init();
 	    	// Mouse listeners
 	        addMouseListener(new MouseAdapter() {
@@ -339,7 +343,7 @@ public class main extends JPanel{
 				@Override
 				public void mouseWheelMoved(MouseWheelEvent e) {
 					switch (menuSelectedItem) { 
-					case 1:// Scaling
+					case 1:					// Scaling
 						double zoom;
 						if (e.getWheelRotation() > 0) {
 							zoom = 0.9;
@@ -352,7 +356,7 @@ public class main extends JPanel{
 						for (Polygon3D p : polygons3D) {
 							for (int i = 0; i < p.getPoints().size(); i++) {
 	
-								// init vector with point parameter
+								// initialize vector with point parameters
 								// Matrix A
 								double[][] objectValues = { {
 										p.getPoints().get(i).getX(),
@@ -360,6 +364,7 @@ public class main extends JPanel{
 										p.getPoints().get(i).getZ(), 
 										1 } };
 								Matrix object = new Matrix(objectValues);
+								//Matrix B
 								double[][] scaleValues = {
 										{ zoom, 0, 0, 0 },
 										{ 0, zoom, 0 ,0},
@@ -372,12 +377,13 @@ public class main extends JPanel{
 								p.getPoints().get(i).setY((int) scaleResult.get(0,1));
 								p.getPoints().get(i).setZ((int) scaleResult.get(0,2));
 							}
+							//Re-calculate vectorN and vectorV values in the 3D polygon
 							p.setVectorN();
 							p.setVectorV();
 							repaint();
 						}
 						break;
-					case 2:{ // Rotation X-Y
+					case 2:{			 // Rotation X-Y
 						int teta;
 						if (e.getWheelRotation() > 0) {
 							teta= angle;
@@ -400,14 +406,13 @@ public class main extends JPanel{
 										p.getPoints().get(i).getZ(), 
 										1 } };
 								Matrix object = new Matrix(objectValues);
+								//Matrix B
 								double[][] rotateValues = {
 										{ Math.cos(Math.toRadians(teta)), -Math.sin(Math.toRadians(teta)), 0, 0 },
 										{ Math.sin(Math.toRadians(teta)), Math.cos(Math.toRadians(teta)), 0, 0 },
 										{ 0, 0, 1, 0 },
-										{-centerImg.x*Math.cos(Math.toRadians(teta)) - centerImg.y*Math.sin(Math.toRadians(teta)) + centerImg.x, 
-											centerImg.x* Math.sin(Math.toRadians(teta))- centerImg.y * Math.cos(Math.toRadians(teta)) + centerImg.y ,
-											0,
-											1}};
+										{0, 0, 0,1 }};
+
 								Matrix rotate = new Matrix(rotateValues);
 								// Matrix A * Matrix B
 								Matrix rotateResult = object.times(rotate);
@@ -416,6 +421,7 @@ public class main extends JPanel{
 								p.getPoints().get(i).setY((int) rotateResult.get(0,1));
 								p.getPoints().get(i).setZ((int) rotateResult.get(0,2));
 							}
+							//Re-calculate vectorN and vectorV values in the 3D polygon
 							p.setVectorN();
 							p.setVectorV();
 							repaint();
@@ -446,6 +452,7 @@ public class main extends JPanel{
 										p.getPoints().get(i).getZ(), 
 										1 } };
 								Matrix object = new Matrix(objectValues);
+								//Matrix B
 								double[][] rotateValues = {
 										{ Math.cos(Math.toRadians(teta)), 0, -Math.sin(Math.toRadians(teta)), 0 },
 										{ 0, 1, 0, 0 },
@@ -459,6 +466,7 @@ public class main extends JPanel{
 								p.getPoints().get(i).setY((int) rotateResult.get(0,1));
 								p.getPoints().get(i).setZ((int) rotateResult.get(0,2));
 							}
+							//Re-calculate vectorN and vectorV values in the 3D polygon
 							p.setVectorN();
 							p.setVectorV();
 							repaint();
@@ -466,12 +474,12 @@ public class main extends JPanel{
 						
 					}
 						break;
-					case 4:{	// Rotation Y-Z
+					case 4:{				// Rotation Y-Z
 						int teta;
 						if (e.getWheelRotation() > 0) {
-							teta= angle;
+							teta = angle;
 						} else {
-							teta= angle*-1;
+							teta = angle*-1;
 						}
 						
 						// find center of img
@@ -502,6 +510,7 @@ public class main extends JPanel{
 								p.getPoints().get(i).setY((int) rotateResult.get(0,1));
 								p.getPoints().get(i).setZ((int) rotateResult.get(0,2));
 							}
+							//Re-calculate vectorN and vectorV values in the 3D polygon
 							p.setVectorN();
 							p.setVectorV();
 							repaint();
@@ -515,11 +524,12 @@ public class main extends JPanel{
 	        
 	    }
     
+		//Function that sets the dimensions of the frame
 	    public Dimension getPreferredSize() {
 	        return new Dimension(Width,Height);
 	    }
     
-	    //All paint actions will be performed from this function
+	//All paint actions will be performed from this function
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		if (init==true){
@@ -527,7 +537,8 @@ public class main extends JPanel{
 			init = false;
 		}
 		
-		switch (hatala) {
+		//Create a 2D polygons list according to the value that is stored in 'Projection' parameter
+		switch (projection) {
 		case 1:
 			polygons2D = cabinet();
 			break;
@@ -545,13 +556,14 @@ public class main extends JPanel{
 
 			g.setColor(polygons2D.get(i).getColor());
 			g.drawPolygon(x, y, x.length);
+			//If the user chose from the menu to fill the polygons , then fill them with color. 
 			if (fill){
 				g.setColor(polygons2D.get(i).getFillColor());
 				g.fillPolygon(x, y, x.length);
 			}
 		}
 	}
-    	// This function gets a List of 2D Polygons and sorts it by the Z index parameter
+    	// This function gets a List of 2D Polygons and sorts it by the polygon's Z index parameter
 	    public List<Polygon2D> sortbyZindex(List<Polygon2D> polygons){
 	    	   
 	    	    for (int pass=1; pass < polygons.size(); pass++) {  // count how many times
@@ -567,7 +579,9 @@ public class main extends JPanel{
 	    	    }
 	    	    return polygons;
 	    }
-	    //This function applie the Cabinet view
+	    
+	    
+	    //This function applies the Cabinet view
 		public List<Polygon2D> cabinet() {
 			List<Polygon2D> polygons2d = new ArrayList<Polygon2D>();
 			boolean zIndexChosen = false;
@@ -604,7 +618,7 @@ public class main extends JPanel{
 			return polygons2d;
 		}
 	
-		//This function applie the Cavalier view
+		//This function applies the Cavalier view
 		public List<Polygon2D> cavalier() {
 			List<Polygon2D> polygons2d = new ArrayList<Polygon2D>();
 			boolean zIndexChosen = false;
@@ -641,13 +655,13 @@ public class main extends JPanel{
 			return polygons2d;
 		}
 		
-		//This function applie the Perspective view
+		//This function applies the Perspective view
 		public List<Polygon2D> perspective(){
 			List<Polygon2D> polygons2d = new ArrayList<Polygon2D>();
 			
 			// run on every 3D polygons
 			for (int i = 0; i < polygons3D.size(); i++) {
-				//if (polygons3D.get(i).isVectorV() == true) {
+				if (polygons3D.get(i).isVectorV() == true) {
 					Polygon2D tmpP = new Polygon2D(polygons3D.get(i).getColor(),
 							polygons3D.get(i).getFillColor());
 	
@@ -681,7 +695,7 @@ public class main extends JPanel{
 								tmpP.getFillColor(), 0));
 					}
 				}
-			//}
+			}
 			
 			return polygons2d;
 		}

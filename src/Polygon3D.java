@@ -1,6 +1,9 @@
+/*Graphics programming , exercise 3.
+ * Created by Ofir Aghai and Vidran Abdovich
+ * Date : 11/7/2014
+ */
+
 import java.awt.Color;
-import java.awt.Point;
-import java.util.ArrayList;
 import java.util.List;
 
 

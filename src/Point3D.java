@@ -1,3 +1,7 @@
+/*Graphics programming , exercise 3.
+ * Created by Ofir Aghai and Vidran Abdovich
+ * Date : 11/7/2014
+ */
 
 public class Point3D {
 private int x;
