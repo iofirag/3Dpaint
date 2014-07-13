@@ -1,5 +1,5 @@
 /*Graphics programming , exercise 3.
- * Created by Ofir Aghai and Vidran Abdovich
+ * Created by Ofir Aghai and Vidran Abdovich and Elad silver
  * Date : 11/7/2014
  */
 import javax.swing.JMenu;
