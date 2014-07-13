@@ -247,9 +247,8 @@ public class main extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null, "About:\n\n"
-						+ "Computers graphics ex3, Created by:\n"
-						+ "Ofir Aghai\n" + "Vidran Abdovich\n\n" + ""
-						+ "Have fun!");
+						+ "Computers graphics ex3.\n\n Created by:\n "
+						+ "Ofir Aghai, " + "Vidran Abdovich, "+"Elad silver\n");
 			}
 		});
 		helpMenu.add(instructions);
