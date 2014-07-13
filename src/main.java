@@ -60,206 +60,207 @@ public class main extends JPanel{
         f.setVisible(true);
         
         
-     // Create the menu bar
-     		JMenuBar menuBar = new JMenuBar();
-     // Transforms
-     		JMenu transformsMenu = new JMenu("Transforms");
-     		JMenuItem transTranslation = new JMenuItem("Translation"); 
-     		transTranslation.addActionListener(new ActionListener() {
-     			@Override
-     			public void actionPerformed(ActionEvent e) {
-     			}
-     		});
-     		JMenuItem transScaling = new JMenuItem("Scaling"); 
-     		transScaling.addActionListener(new ActionListener() {
-     			@Override
-     			public void actionPerformed(ActionEvent e) {
-     				menuSelectedItem = 1;
-     			}
-     		});
-     		JMenu transRotation = new JMenu("Rotation");
-     		JMenuItem transRotationXY = new JMenuItem("X-Y");
-     		transRotationXY.addActionListener(new ActionListener() {
-     			@Override
-     			public void actionPerformed(ActionEvent e) {
-     				menuSelectedItem = 2;
-     				String result = JOptionPane
-    						.showInputDialog("Enter angle for rotation:");
-    				angle = Integer.parseInt(result);
-     			}
-     		});
-     		JMenuItem transRotationXZ = new JMenuItem("X-Z");
-     		transRotationXZ.addActionListener(new ActionListener() {
-     			@Override
-     			public void actionPerformed(ActionEvent e) {
-     				menuSelectedItem = 3;
-     				String result = JOptionPane
-    						.showInputDialog("Enter angle for rotation:");
-    				angle = Integer.parseInt(result);
-     			}
-     		});
-     		JMenuItem transRotationYZ = new JMenuItem("Y-Z");
-     		transRotationYZ.addActionListener(new ActionListener() {
-     			@Override
-     			public void actionPerformed(ActionEvent e) {
-     				menuSelectedItem = 4;
-     				String result = JOptionPane
-    						.showInputDialog("Enter angle for rotation:");
-    				angle = Integer.parseInt(result);
-     			}
-     		});
-     		transRotation.add(transRotationXY);
-     		transRotation.add(transRotationXZ);
-     		transRotation.add(transRotationYZ);
-     		// **********************
-     		transformsMenu.add(transTranslation);
-     		transformsMenu.add(transScaling);
-     		transformsMenu.add(transRotation);
-     		// ************************************************
-     		
-     		// Perspectives menu	
-     		JMenu perspectiveMenu = new JMenu("Select view");
-     		JMenuItem persCabinet = new JMenuItem("Cabinet"); 
-     		persCabinet.addActionListener(new ActionListener() {
-     			@Override
-     			public void actionPerformed(ActionEvent e) {
-     				projection = 1;
-     				// custom title, custom icon
-    				String result = JOptionPane
-    						.showInputDialog("Enter angle for perspective:");
-    				angle = Integer.parseInt(result);
-     				m.repaint();
-     			}
-     		});
-     		JMenuItem persCavalier = new JMenuItem("Cavalier"); 
-     		persCavalier.addActionListener(new ActionListener() {
-     			@Override
-     			public void actionPerformed(ActionEvent e) {
-     				projection = 2;
-     				// custom title, custom icon
-    				String result = JOptionPane
-    						.showInputDialog("Enter angle for perspective:");
-    				angle = Integer.parseInt(result);
-     				m.repaint();
-     			}
-     		});
-     		JMenuItem persPerpective = new JMenuItem("Perpective"); 
-     		persPerpective.addActionListener(new ActionListener() {
-     			@Override
-     			public void actionPerformed(ActionEvent e) {
-     				projection = 3;
-     				m.repaint();
-     			}
-     		});
-     		perspectiveMenu.add(persCabinet);
-     		perspectiveMenu.add(persCavalier);
-     		perspectiveMenu.add(persPerpective);
-     	// ************************************************
-     	// Fill menu	
-     		JMenu poligonsFillMenu = new JMenu("Fill");
-     		JMenuItem autoFill = new JMenuItem("Fill polygons"); 
-     		autoFill.addActionListener(new ActionListener() {
-     			@Override
-     			public void actionPerformed(ActionEvent e) {
-     				fill = true;
-     				m.repaint();
-     			}
-     		});
-     		JMenuItem transparentFill = new JMenuItem("Remove Fill"); 
-     		transparentFill.addActionListener(new ActionListener() {
-     			@Override
-     			public void actionPerformed(ActionEvent e) {
-     				fill = false;
-     				m.repaint();
-     			}
-     		});
-     		poligonsFillMenu.add(autoFill);
-     		poligonsFillMenu.add(transparentFill);
-     	// ************************************************
-     		JMenu restart = new JMenu("Restart"); 
-     		restart.addMouseListener(new MouseListener() {
-				
-				@Override
-				public void mouseReleased(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-				
-				@Override
-				public void mousePressed(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-				
-				@Override
-				public void mouseExited(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-				
-				@Override
-				public void mouseEntered(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-				
-				@Override
-				// When clicking 'restart' in the menu, we need to 
-				//initialize all parameters to its original values
-				public void mouseClicked(MouseEvent e) {
-					init=true;
-     				projection=1;
-     				menuSelectedItem = 0;
-     				m.angle = 90;
-     		    	m.repaint();
-					
-				}
-			});
-     		JMenu helpMenu = new JMenu("Help");
-    		JMenuItem instructions = new JMenuItem("Instructions");
-    		instructions.addActionListener(new ActionListener() {
-    			@Override
-    			public void actionPerformed(ActionEvent e) {
-    				JOptionPane.showMessageDialog(null, "Instructions:\n\n" +
+		// Create the menu bar
+		JMenuBar menuBar = new JMenuBar();
+		// Transforms
+		JMenu transformsMenu = new JMenu("Transforms");
+		JMenuItem transTranslation = new JMenuItem("Translation");
+		transTranslation.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		JMenuItem transScaling = new JMenuItem("Scaling");
+		transScaling.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				menuSelectedItem = 1;
+			}
+		});
+		JMenu transRotation = new JMenu("Rotation");
+		JMenuItem transRotationXY = new JMenuItem("X-Y");
+		transRotationXY.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				menuSelectedItem = 2;
+				String result = JOptionPane
+						.showInputDialog("Enter angle for rotation:");
+				angle = Integer.parseInt(result);
+			}
+		});
+		JMenuItem transRotationXZ = new JMenuItem("X-Z");
+		transRotationXZ.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				menuSelectedItem = 3;
+				String result = JOptionPane
+						.showInputDialog("Enter angle for rotation:");
+				angle = Integer.parseInt(result);
+			}
+		});
+		JMenuItem transRotationYZ = new JMenuItem("Y-Z");
+		transRotationYZ.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				menuSelectedItem = 4;
+				String result = JOptionPane
+						.showInputDialog("Enter angle for rotation:");
+				angle = Integer.parseInt(result);
+			}
+		});
+		transRotation.add(transRotationXY);
+		transRotation.add(transRotationXZ);
+		transRotation.add(transRotationYZ);
+		// **********************
+		transformsMenu.add(transTranslation);
+		transformsMenu.add(transScaling);
+		transformsMenu.add(transRotation);
+		// ************************************************
 
-    						"How to use the transformations?:\n" +
-    						"" +
-    						"   Translation-\n" +
-    						"   click with the mouse and drag it.\n\n" +
-    						"" +
-    						"   Scaling-\n" +
-    						"   Use with mouse wheel for zoom-in and zoom-out.\n\n" +
-    						"" +
-    						"   Rotation-\n" +
-    						"   To rotate right : Mouse wheel in.\n" +
-    						"   To rotate left : Mouse wheel out.\n" +
-    						"" +
-    						
-    						"");
-    			}
-    		});
-    		JMenuItem about = new JMenuItem("About");
-    		about.addActionListener(new ActionListener() {
-    			@Override
-    			public void actionPerformed(ActionEvent e) {
-    				JOptionPane.showMessageDialog(null, "About:\n\n" +
-    						"Computers graphics ex3, Created by:\n"+
-    						"Ofir Aghai\n" +
-    						"Vidran Abdovich\n\n" +
-    						"" +
-    						"Have fun!");
-    			}
-    		});
-    		helpMenu.add(instructions);
-    		helpMenu.add(about);
-     		menuBar.add(transformsMenu);
-     		menuBar.add(perspectiveMenu);
-     		menuBar.add(poligonsFillMenu);
-     		menuBar.add(restart);
-     		menuBar.add(helpMenu);
-     		f.add(menuBar, BorderLayout.NORTH);
-    } 
+		// Perspectives menu
+		JMenu perspectiveMenu = new JMenu("Select view");
+		JMenuItem persCabinet = new JMenuItem("Cabinet");
+		persCabinet.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				projection = 1;
+				// custom title, custom icon
+				String result = JOptionPane
+						.showInputDialog("Enter angle for perspective:");
+				angle = Integer.parseInt(result);
+				m.repaint();
+			}
+		});
+		JMenuItem persCavalier = new JMenuItem("Cavalier");
+		persCavalier.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				projection = 2;
+				// custom title, custom icon
+				String result = JOptionPane
+						.showInputDialog("Enter angle for perspective:");
+				angle = Integer.parseInt(result);
+				m.repaint();
+			}
+		});
+		JMenuItem persPerpective = new JMenuItem("Perpective");
+		persPerpective.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				projection = 3;
+				m.repaint();
+			}
+		});
+		perspectiveMenu.add(persCabinet);
+		perspectiveMenu.add(persCavalier);
+		perspectiveMenu.add(persPerpective);
+		// ************************************************
+		// Fill menu
+		JMenu poligonsFillMenu = new JMenu("Fill");
+		JMenuItem autoFill = new JMenuItem("Fill polygons");
+		autoFill.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				fill = true;
+				m.repaint();
+			}
+		});
+		JMenuItem transparentFill = new JMenuItem("Remove Fill");
+		transparentFill.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				fill = false;
+				m.repaint();
+			}
+		});
+		poligonsFillMenu.add(autoFill);
+		poligonsFillMenu.add(transparentFill);
+		// ************************************************
+		JMenu restart = new JMenu("Restart");
+		restart.addMouseListener(new MouseListener() {
 
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			// When clicking 'restart' in the menu, we need to
+			// initialize all parameters to its original values
+			public void mouseClicked(MouseEvent e) {
+				init = true;
+				projection = 1;
+				menuSelectedItem = 0;
+				m.angle = 90;
+				m.repaint();
+
+			}
+		});
+		JMenu helpMenu = new JMenu("Help");
+		JMenuItem instructions = new JMenuItem("Instructions");
+		instructions.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane
+						.showMessageDialog(
+								null,
+								"Instructions:\n\n"
+										+
+
+										"How to use the transformations?:\n"
+										+ ""
+										+ "   Translation-\n"
+										+ "   click with the mouse and drag it.\n\n"
+										+ ""
+										+ "   Scaling-\n"
+										+ "   Use with mouse wheel for zoom-in and zoom-out.\n\n"
+										+ ""
+										+ "   Rotation-\n"
+										+ "   To rotate right : Mouse wheel in.\n"
+										+ "   To rotate left : Mouse wheel out.\n"
+										+ "" +
+
+										"");
+			}
+		});
+		JMenuItem about = new JMenuItem("About");
+		about.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "About:\n\n"
+						+ "Computers graphics ex3, Created by:\n"
+						+ "Ofir Aghai\n" + "Vidran Abdovich\n\n" + ""
+						+ "Have fun!");
+			}
+		});
+		helpMenu.add(instructions);
+		helpMenu.add(about);
+		menuBar.add(transformsMenu);
+		menuBar.add(perspectiveMenu);
+		menuBar.add(poligonsFillMenu);
+		menuBar.add(restart);
+		menuBar.add(helpMenu);
+		f.add(menuBar, BorderLayout.NORTH);
+	}
 
     	//mouse variables
     	protected Point currMousePoint;
